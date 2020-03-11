@@ -1,5 +1,6 @@
-#include<bits/stdc++.h>
+
 #include<stdio.h>
+#include<math.h>
 void mergeVariables(double **jointProbability12,double *mergedArray,double* arrayParameter1, double* arrayParameter2,long long arrayLen,long long state1,long long state2)
 {
     long long maxState=0;
