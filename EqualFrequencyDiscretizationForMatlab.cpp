@@ -3,32 +3,41 @@
 #include<stdlib.h>
 #include<stdio.h>
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]){
-    double *inputArray;
+    double *inputArray,*binCount;
+    long long numberOfBins,numberOfElementsInTheInputArray,frequencyInBins,extra,flag=0,flag2=2,bin=1,reset=0;
     inputArray=mxGetPr(prhs[0]);
-    double *binCount=mxGetPr(prhs[1]);
-    int numberOfBins=(int)*binCount;
-    int numberOfElementsInTheInputArray=mxGetNumberOfElements(prhs[0]);
-    int frequencyOfBins=(int)((numberOfElementsInTheInputArray+numberOfBins)/numberOfBins);
-    int extra=numberOfElementsInTheInputArray%numberOfBins;
+    binCount=mxGetPr(prhs[1]);
+     numberOfBins=(long long)*binCount;
+     numberOfElementsInTheInputArray=mxGetNumberOfElements(prhs[0]);
+     if(numberOfElementsInTheInputArray%numberOfBins!=0){
+     frequencyInBins=(long long)((numberOfElementsInTheInputArray+numberOfBins)/numberOfBins);
+
+     flag2=-1;
+     }
+     else {
+            frequencyInBins=numberOfElementsInTheInputArray/numberOfBins;
+         mexPrintf("hello");
+     }
+    extra=numberOfElementsInTheInputArray%numberOfBins;
 
     //printf("%d\n",frequencyOfBins);
-    int bin=1;
-    int flag=0;
-    int reset=0;
+
     plhs[0]=mxCreateDoubleMatrix(numberOfElementsInTheInputArray,1,mxREAL);
     double *outputArray;
     outputArray=mxGetPr(plhs[0]);
     //outputArray=(int*) calloc(sizeof(int),numberOfElementsInTheInputArray);
-    for(int iterator1=0;iterator1<numberOfElementsInTheInputArray;iterator1++){
+    for(long long iterator1=0;iterator1<numberOfElementsInTheInputArray;iterator1++){
             outputArray[iterator1]=bin;
             extra--;
             reset++;
-            if(reset==frequencyOfBins){
+            if(reset==frequencyInBins){
                 bin++;
                 reset=0;
+                if(flag2==-1)
+                flag2=0;
             }
-            if(extra==0 && flag==0){
-                frequencyOfBins--;
+            if(extra<=0 && flag==0 && flag2==0){
+                frequencyInBins--;
                 flag=1;
             }
 
