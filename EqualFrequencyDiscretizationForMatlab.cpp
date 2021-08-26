@@ -10,13 +10,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]){
      numberOfBins=(long long)*binCount;
      numberOfElementsInTheInputArray=mxGetNumberOfElements(prhs[0]);
      if(numberOfElementsInTheInputArray%numberOfBins!=0){
-     frequencyInBins=(long long)((numberOfElementsInTheInputArray+numberOfBins)/numberOfBins);
+     frequencyInBins=(long long)((numberOfElementsInTheInputArray+numberOfBins-1)/numberOfBins);
 
      flag2=-1;
      }
      else {
             frequencyInBins=numberOfElementsInTheInputArray/numberOfBins;
-         mexPrintf("hello");
+        // mexPrintf("hello");
      }
     extra=numberOfElementsInTheInputArray%numberOfBins;
 
