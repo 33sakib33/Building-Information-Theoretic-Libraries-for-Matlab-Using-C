@@ -104,9 +104,10 @@ long long countStates(double *arrayParameter,long long sizeOfArray)
     long long numberOfStates=maximum-minimum+1;
     return numberOfStates;
 }
-void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]){
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
+{
     double *inputArrayX,*inputArrayY,*inputArrayZ,conditionalEntropyXZ=0,conditionalEntropyXM=0;
-     size_t sizeX,sizeY,sizeZ;
+    size_t sizeX,sizeY,sizeZ;
     long long lengthOfArrayX,lengthOfArrayY,lengthOfArrayZ,stateX,stateY,stateZ,stateM;
     inputArrayX=mxGetPr(prhs[0]);
     inputArrayY=mxGetPr(prhs[1]);
@@ -117,6 +118,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]){
     lengthOfArrayX=(long long)sizeX;
     lengthOfArrayY=(long long)sizeY;
     lengthOfArrayZ=(long long)sizeZ;
+    //for(int i=0;i<lengthOfArrayX;i++)mexPrintf("%lf ",inputArrayX[i]);
     stateX=countStates(&inputArrayX[0],lengthOfArrayX);
     stateY=countStates(&inputArrayY[0],lengthOfArrayY);
     stateZ=countStates(&inputArrayZ[0],lengthOfArrayZ);
@@ -128,22 +130,22 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]){
     double **jointProbabilityXM;
     double **jointProbabilityXZ;
     double **jointProbabilityYZ;
-/*
-       for(int i=0;i<5;i++){
-        mexPrintf("%lf ",inputArrayX[i]);
-    }
-        mexPrintf("\n");
-     for(int i=0;i<5;i++){
-        mexPrintf("%lf ",inputArrayY[i]);
-    }
-     mexPrintf("\n");
-     for(int i=0;i<5;i++){
-        mexPrintf("%lf ",inputArrayZ[i]);
-    }
-  */
+    /*
+           for(int i=0;i<5;i++){
+            mexPrintf("%lf ",inputArrayX[i]);
+        }
+            mexPrintf("\n");
+         for(int i=0;i<5;i++){
+            mexPrintf("%lf ",inputArrayY[i]);
+        }
+         mexPrintf("\n");
+         for(int i=0;i<5;i++){
+            mexPrintf("%lf ",inputArrayZ[i]);
+        }
+      */
 
 
-     jointProbabilityXY= new double*[stateX];
+    jointProbabilityXY= new double*[stateX];
 
     for(long long iterator1=0; iterator1<stateX; iterator1++)
     {
@@ -195,21 +197,21 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]){
 
     }
     jointProbability(&inputArrayX[0],&mergedArray[0],stateX,stateM,lengthOfArray,jointProbabilityXM);
-      /* for(int i=0;i<stateX;i++){
-        for(int j=0;j<stateM;j++){
-            mexPrintf("%lf ",jointProbabilityXM[i][j]);
-        }
+    /* for(int i=0;i<stateX;i++){
+      for(int j=0;j<stateM;j++){
+          mexPrintf("%lf ",jointProbabilityXM[i][j]);
+      }
     }*/
     probability(&probabilityM[0],&mergedArray[0],lengthOfArray,stateM);
     //for(long long i=0;i<stateM;i++)mexPrintf("%lf ",probabilityM[i]);
     conditionalEntropyXM=conditionalEntropy(&probabilityM[0],jointProbabilityXM,lengthOfArray,stateX,stateM);
 
-     plhs[0]=mxCreateDoubleMatrix(1,1,mxREAL);
-       double *mutualinformation;
-      mutualinformation=mxGetPr(plhs[0]);
-      *mutualinformation=conditionalEntropyXZ-conditionalEntropyXM;
-      //mexPrintf("%lf\n",conditionalEntropyXM);
-      //mexPrintf("%lf\n",conditionalEntropyXZ);
+    plhs[0]=mxCreateDoubleMatrix(1,1,mxREAL);
+    double *mutualinformation;
+    mutualinformation=mxGetPr(plhs[0]);
+    *mutualinformation=conditionalEntropyXZ-conditionalEntropyXM;
+    //mexPrintf("%lf\n",conditionalEntropyXM);
+    //mexPrintf("%lf\n",conditionalEntropyXZ);
 
 
 

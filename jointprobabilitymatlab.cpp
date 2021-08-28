@@ -2,14 +2,7 @@
 #include"matrix.h"
 #include<bits/stdc++.h>
 
-double Entropy(double *probarray,int sizeOfArray){
-    double H;
-    for(int itr1=0;itr1<sizeOfArray;itr1++){
-       H=H-probarray[itr1]*log(probarray[itr1]);
-    }
-    H=H/log(2);
-    return H;
-}
+
 
 void jointProbability(long long *arrayParameter1,
                       long long *arrayParamter2,long long state1,long long state2,

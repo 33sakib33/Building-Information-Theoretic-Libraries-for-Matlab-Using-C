@@ -3,9 +3,7 @@
 #include<stdio.h>
 #include<math.h>
 
-double condtional_entropy(**double probabilityXY, *double probabiltyX){
 
-}
 
 
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]){
